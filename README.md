@@ -6,7 +6,7 @@ Welcome to the Mountain Planning Service Group (MPSG; USDA Forest Service) Speci
 
 **Note:** Some functions access publicly available data sources like GBIF, eBird, and BIEN. Other functions access data on internal Forest Service servers and will not work unless you are on the Forest Service network or VPN with the servers mapped to your computer. We have tired to note which functions access Forest Service servers in the man pages. Please let us know if we missed anything by submitting an `Issue`.
 
-**Authors:** [Michael Schmidt](https://github.com/fs-mschmidty) and [Matt Van Scoyoc](https://github.com/fs-scoyoc)
+**Authors:** [Matt Van Scoyoc](https://github.com/fs-scoyoc) and [Michael Schmidt](https://github.com/fs-mschmidty)
 
 **Maintainer:** [Matt Van Scoyoc](https://github.com/fs-scoyoc)
 
@@ -25,7 +25,7 @@ Welcome to the Mountain Planning Service Group (MPSG; USDA Forest Service) Speci
 ## Installation
 
 ``` r
-remotes::install_github("fs-mschmidty/mpsgSE")
+remotes::install_github("fs-scoyoc/mpsgSE")
 ```
 
 ## Template Species Evaluation Documents
