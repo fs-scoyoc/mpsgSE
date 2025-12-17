@@ -15,7 +15,8 @@ combine_ns_habs(state_a_habitats, state_b_habitats)
 A \code{\link[tibble:tibble]{tibble::tibble()}}
 }
 \description{
-This function combines two habitat lists returned from \code{get_ns_habitat()}.
+This function combines two habitat data frames returned from
+\code{get_ns_habitat()}.
 }
 \examples{
 ## Not run:

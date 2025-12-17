@@ -15,7 +15,6 @@
 #'
 #' @return A tibble.
 #' @seealso [gbif_spp()], [build_seinet_spp()], [build_imbcr_spp()]
-#' @export
 #'
 #' @examples
 #' ## Not run:

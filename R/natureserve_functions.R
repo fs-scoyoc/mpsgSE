@@ -4,13 +4,13 @@
 #'     rankings using data returned from `get_ns_state_list()`.
 #'
 #' @param ns_data NatureServe data from `get_ns_state_list()`.
-#'
+#' 
 #' @return A [tibble::tibble()]
-#'
+#' 
 #' @seealso [get_ns_state_list()]
-#'
+#' 
 #' @export
-#'
+#' 
 #' @examples
 #' ## Not run:
 #'
@@ -52,17 +52,18 @@ build_ns_spp_list <- function(ns_data){
 
 #' Combine Two NatureServe Habitat Data Frames
 #'
-#' This function combines two habitat lists returned from `get_ns_habitat()`.
+#' This function combines two habitat data frames returned from 
+#'     `get_ns_habitat()`.
 #'
 #' @param state_a_habitats Idaho NatureServe Habitats from this pipeline.
 #' @param state_b_habitats Montana NatureServe Habitats from this pipeline
-#'
+#' 
 #' @returns A [tibble::tibble()]
-#'
+#' 
 #' @seealso [get_ns_habitat()]
-#'
+#' 
 #' @export
-#'
+#' 
 #' @examples
 #' ## Not run:
 #'
@@ -92,27 +93,84 @@ combine_ns_habs <- function(state_a_habitats, state_b_habitats){
 }
 
 
-#' Combine NatureServe Data
+#' Combine NatureServe Data from build_ns_spp_list()
 #' 
-#' This function combines the state NatureServe lists from the 
-#'     `get_ns_state_list()` function in this pipeline.
+#' This function combines two species data frames returned from 
+#'     `build_ns_spp_list()`.
+#'
+#' @param ns_spp_1 Data frame from `build_ns_spp_list()`.
+#' @param ns_spp_2 Data frame from `build_ns_spp_list()`.
+#' 
+#' @returns A [tibble::tibble()]
+#' 
+#' @seealso [build_ns_spp_list()]
+#' 
+#' @export
+#' 
+#' @examples
+#' ## Not run:
+#'
+#' library("mpsgSE")
+#'
+#' # Colorado
+#' ns_co <- get_ns_state_list("CO")
+#' spp_co <- build_ns_spp_list(ns_co)
+#'
+#' # Wyoming
+#' ns_wy <- get_ns_state_list("WY")
+#' spp_wy <- build_ns_spp_list(ns_wy)
+#'
+#' # Combine CO and WY
+#' spp_list <- combine_ns_spp_lists(spp_co, spp_wy)
+#'
+#' ## End(Not run)
+combine_ns_spp_lists <- function(ns_spp_1, ns_spp_2){
+  # ns_spp_1 = targets::tar_read(co_ns_spp)
+  # ns_spp_2 = targets::tar_read(ks_ns_spp)
+  
+  taxonomy_select = c("taxon_id", "kingdom", "plylum", "class", "order", 
+                      "family", "genus", "species", "subspecies", "variety", 
+                      "form")
+  status_select = c("taxon_id", "scientific_name", "common_name", 
+                    "broad_group", "fine_group", "gRank", "rounded_gRank", 
+                    "esa_status", "view_on_nature_serve_explorer")
+  
+  s_rank = dplyr::full_join(
+    dplyr::select(ns_spp_1, taxon_id, dplyr::contains("sRank")) |> 
+      dplyr::distinct(), 
+    dplyr::select(ns_spp_2, taxon_id, dplyr::contains("sRank")) |> 
+      dplyr::distinct(), 
+    by = "taxon_id", relationship = "many-to-many"
+  )
+  taxonomy = dplyr::select(ns_spp_1, dplyr::any_of(taxonomy_select)) |> 
+    dplyr::bind_rows(dplyr::select(ns_spp_2, dplyr::any_of(taxonomy_select))) |> 
+    dplyr::distinct(taxon_id, .keep_all = TRUE)
+  spp_list = dplyr::select(ns_spp_1, dplyr::any_of(status_select)) |> 
+    dplyr::bind_rows(dplyr::select(ns_spp_2, dplyr::any_of(status_select))) |> 
+    dplyr::distinct(taxon_id, .keep_all = TRUE) |> 
+    dplyr::left_join(s_rank, by = "taxon_id", relationship = "many-to-many") |> 
+    dplyr::left_join(taxonomy, by = "taxon_id", relationship = "many-to-many")
+  return(spp_list)
+}
+
+
+#' Combine NatureServe Data from get_ns_state_list()
+#' 
+#' This function combines the state NatureServe lists returned from 
+#'     `get_ns_state_list()` and returns a species list data frame.
 #'
 #' @param ns_list_1 State data from `get_ns_state_list()`.
 #' @param ns_list_2 State data from `get_ns_state_list()`.
-#'
 #' @return A [tibble::tibble()]
-#'
 #' @seealso [get_ns_state_list()]
-#'
 #' @export
-#'
 #' @examples
 #' library("mpsgSE")
 #'
 #' ns_co <- get_ns_state_list("CO")
 #' ns_ks <- get_ns_state_list("KS")
 #' ns_data <- combine_natureserve_data(ns_co, ns_ks)
-combine_natureserve_data <- function(ns_list_1, ns_list_2){
+combine_ns_state_lists <- function(ns_list_1, ns_list_2){
   # Function to pull species list from NatureServe List
   pull_spp_list = function(ns_list){
     dat = ns_list[
