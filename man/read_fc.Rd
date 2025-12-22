@@ -4,14 +4,14 @@
 \alias{read_fc}
 \title{Read feature class into R.}
 \usage{
-read_fc(lyr, dsn, crs = NULL)
+read_fc(lyr, dsn, target_crs = NULL)
 }
 \arguments{
 \item{lyr}{Feature class name.}
 
 \item{dsn}{Path to geodatabase that holds \code{lyr}.}
 
-\item{crs}{Target coordinate reference system (CRS). Either and
+\item{target_crs}{Target coordinate reference system (CRS). Either and
 \code{sf::st_crs()} object or accepted input string for \code{sf::st_crs()} (e.g.
 "WGS84" or "NAD83"). See \code{\link[sf:st_crs]{sf::st_crs()}} for more details. Default is NULL.
 If NULL, resulting \link[sf:sf]{sf::sf} object will not be transformed.}

@@ -13,6 +13,7 @@
 #' @export
 #'
 #' @examples
+#' library(mpsgSE)
 pull_landfire <- function(plan_area_sf, lf_dir, email_address, res = 30){
   # plan_area_sf = targets::tar_read(plan_area)
   # lf_dir = file.path("data", "LANDFIRE")
@@ -82,6 +83,7 @@ pull_landfire <- function(plan_area_sf, lf_dir, email_address, res = 30){
 #' @export
 #'
 #' @examples
+#' library(mpsgSE)
 extract_landfire_evt <- function(spp_list, spp_pts_sf, lf_dir){
   # spp_list = targets::tar_read(nat_known_list)
   # spp_pts_sf = targets::tar_read(all_occ_data)

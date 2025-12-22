@@ -6,6 +6,7 @@
 #' @export
 #'
 #' @examples
+#' library(mpsgSE)
 pull_nwi_data <- function(plan_area_sf, gdb_path){
   # plan_area_sf = targets::tar_read(plan_area)
   # gdb_path = file.path("data", "MBF_spp_eval.gdb")
@@ -33,11 +34,11 @@ pull_nwi_data <- function(plan_area_sf, gdb_path){
 
 
 
-pull_nhd_data <- function(plan_area_sf, gdb_path){
-  # plan_area_sf = targets::tar_read(plan_area)
-  # gdb_path = file.path("data", "MBF_spp_eval.gdb")
-  
-  nhd_path <- "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer"
-  
-  
-}
+# pull_nhd_data <- function(plan_area_sf, gdb_path){
+#   # plan_area_sf = targets::tar_read(plan_area)
+#   # gdb_path = file.path("data", "MBF_spp_eval.gdb")
+#   
+#   nhd_path <- "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer"
+#   
+#   
+# }
