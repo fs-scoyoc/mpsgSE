@@ -70,8 +70,8 @@ clip_fc <- function(sf_lyr, sf_clip, locale = NULL){
 #' @param region_number The Forest Service Region number
 #' @param forest_number The Forest Service Forest number.
 #' @param forest_name The Name of the National Forest.
-#' @param crs The target coordinate reference system. The default is EPSG:4326
-#'                (WGS 84).
+#' @param target_crs The target coordinate reference system. The default is 
+#'      EPSG:4326 (WGS 84).
 #'
 #' @details
 #' `get_basemap_data` returns a list of spatial features used to produce 
@@ -117,13 +117,13 @@ clip_fc <- function(sf_lyr, sf_clip, locale = NULL){
 #' basemap_data <- get_basemap_data(states, region_number, forest_number, 
 #'                                  forest_name)
 get_basemap_data = function(states, region_number, forest_number, forest_name,
-                            crs = "EPSG:4326"){
+                            target_crs = "EPSG:4326"){
   
   # states = c("Colorado", "Kansas", "Oklahoma", "New Mexico", "Texas")
   # region_number = "02"
   # forest_number = "12"
   # forest_name = "Pike and San Isabel National Forests"
-  # crs = "EPSG:26913"
+  # target_crs = "EPSG:26913"
   
   message("Western hemisphere")
   americas = rnaturalearth::ne_countries(scale = "medium",
@@ -156,31 +156,30 @@ get_basemap_data = function(states, region_number, forest_number, forest_name,
   
   message("FS Boundaries")
   # Administrative Boundary
-  admin_bndry = mpsgSE::read_edw_lyr("EDW_ForestSystemBoundaries_01", 
-                                     layer = 1) |> 
+  admin_bndry = mpsgSE::read_edw_lyr("EDW_ForestSystemBoundaries_01") |> 
     dplyr::filter(region == region_number & forestnumber == forest_number) |>
-    sf::st_transform(crs) |> 
+    sf::st_transform(target_crs) |> 
     sf::st_make_valid()
   # Plan Area (Forest Service Land)
-  plan_area = mpsgSE::read_edw_lyr("EDW_BasicOwnership_01", layer = 0) |> 
+  plan_area = mpsgSE::read_edw_lyr("EDW_BasicOwnership_02") |> 
     dplyr::filter(forestname == forest_name) |>
     dplyr::filter(ownerclassification == "USDA FOREST SERVICE") |>
-    sf::st_transform(crs) |> 
+    sf::st_transform(target_crs) |> 
     sf::st_make_valid()
   # Ranger Districts
   districts = mpsgSE::read_edw_lyr("EDW_RangerDistricts_03", layer = 1) |> 
     dplyr::filter(region == region_number & forestnumber == forest_number) |>
-    sf::st_transform(crs) |> 
+    sf::st_transform(target_crs) |> 
     sf::st_make_valid()
   # Buffer
   aoa = sf::st_buffer(admin_bndry, units::as_units(3,"mi")) |> 
-    sf::st_transform(crs) |> 
+    sf::st_transform(target_crs) |> 
     sf::st_make_valid()
   # Area of Analysis
-  aoa_bbox = aoa |> sf::st_bbox() |> sf::st_transform(crs)
+  aoa_bbox = aoa |> sf::st_bbox() |> sf::st_transform(target_crs)
   plan_area_doughnut = sf::st_buffer(plan_area, units::as_units(1,"km")) |> 
     sf::st_difference(plan_area) |> 
-    sf::st_transform(crs) |> 
+    sf::st_transform(target_crs) |> 
     sf::st_make_valid() |> 
     suppressWarnings()
 
@@ -217,7 +216,8 @@ get_basemap_data = function(states, region_number, forest_number, forest_name,
 #'
 #' @param map_name Character. Name of map layer.
 #' @param layer Integer. Number of layer to read. Default is  zero (0).
-#' @param crs Coordinate reference system (crs). Default is EPSG:4326 (WGS 84).
+#' @param target_crs Coordinate reference system (crs). Default is EPSG:4326 
+#'      (WGS 84).
 #'
 #' @return An [sf] object or [terra::SpatRaster-class].
 #' @seealso [arcgislayers::arc_read()], [sf::st_transform()]
@@ -230,16 +230,16 @@ get_basemap_data = function(states, region_number, forest_number, forest_name,
 #' admin_bndry <- read_edw_lyr("EDW_ForestSystemBoundaries_01", layer = 1) |> 
 #'   dplyr::filter(forestname == "Dixie National Forest")
 #' 
-read_edw_lyr <- function(map_name, layer = 0, crs = "EPSG:4326"){
-  # map_name = "EDW_ForestSystemBoundaries_01"
-  # layer = 1
+read_edw_lyr <- function(map_name, layer = 0, target_crs = "EPSG:4326"){
+  # map_name = "EDW_BasicOwnership_02"
+  # layer = 0
   edw_rest <- "https://apps.fs.usda.gov/arcx/rest/services/EDW/"
   lyr = arcgislayers::arc_read(
     glue::glue(edw_rest, "{map_name}/MapServer/{layer}")
   ) |>
     janitor::clean_names() |> 
     sf::st_make_valid() |> 
-    sf::st_transform(crs)
+    sf::st_transform(target_crs)
   return(lyr)
 }
 
@@ -253,7 +253,7 @@ read_edw_lyr <- function(map_name, layer = 0, crs = "EPSG:4326"){
 #'
 #' @param lyr Feature class name.
 #' @param dsn Path to geodatabase that holds `lyr`.
-#' @param crs Target coordinate reference system (CRS). Either and 
+#' @param target_crs Target coordinate reference system (CRS). Either and 
 #'   `sf::st_crs()` object or accepted input string for `sf::st_crs()` (e.g. 
 #'   "WGS84" or "NAD83"). See [sf::st_crs()] for more details. Default is NULL. 
 #'   If NULL, resulting [sf] object will not be transformed.
@@ -271,9 +271,9 @@ read_edw_lyr <- function(map_name, layer = 0, crs = "EPSG:4326"){
 #'         crs = "NAD83")
 #' 
 #' ## End (Not run)
-read_fc <- function(lyr, dsn, crs = NULL){
+read_fc <- function(lyr, dsn, target_crs = NULL){
   fc = sf::read_sf(layer = lyr, dsn = dsn) |> sf::st_make_valid()
-  if(!is.null(crs)){fc = sf::st_transform(fc, crs = crs)}
+  if(!is.null(target_crs)){fc = sf::st_transform(fc, crs = target_crs)}
   return(fc)
 }
 
