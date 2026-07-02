@@ -34,9 +34,9 @@ A \code{\link[tibble:tibble]{tibble::tibble()}}
 }
 \description{
 This function adds taxonomy information from GBIF to any data frame that has
-valid scientific names and returns a tibble. \code{gbif_taxonID} is the GBIF
+valid scientific names and returns a tibble. \code{taxon_id} is the GBIF
 ID for the given scientific name and full taxonomy from the GBIF backbone
-taxonomies database. \code{taxon_id} is ID number of the accepted taxonomy
+taxonomies database. \code{gbif_taxonID} is ID number of the accepted taxonomy
 from the GBIF backbone.
 }
 \examples{

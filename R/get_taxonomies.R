@@ -7,9 +7,9 @@
 #' Get Taxonomies from GBIF
 #'
 #' This function adds taxonomy information from GBIF to any data frame that has
-#'     valid scientific names and returns a tibble. `gbif_taxonID` is the GBIF
+#'     valid scientific names and returns a tibble. `taxon_id` is the GBIF
 #'     ID for the given scientific name and full taxonomy from the GBIF backbone
-#'     taxonomies database. `taxon_id` is ID number of the accepted taxonomy
+#'     taxonomies database. `gbif_taxonID` is ID number of the accepted taxonomy
 #'     from the GBIF backbone.
 #'
 #' @param spp_list A data frame containing valid scientific species names.
