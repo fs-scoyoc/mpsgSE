@@ -10,15 +10,24 @@
 Get Taxonomies from GBIF
 }}
 \usage{
-get_taxonomies(spp_list, query_field = "scientific_name", correct = FALSE)
+get_taxonomies(
+  spp_list,
+  query_field = "scientific_name",
+  authorship = TRUE,
+  correct = TRUE
+)
 }
 \arguments{
 \item{spp_list}{A data frame containing valid scientific species names.}
 
 \item{query_field}{The name of the variable with valid scientific names.}
 
+\item{authorship}{Logical. If TRUE, Authorship is queried from GBIF. Default
+is TRUE.}
+
 \item{correct}{Logical. If TRUE, \code{correct_taxon_ids()} is used to correct
-known issues with taxon ID's and scientific names. Default is FALSE.}
+known issues with taxon ID's and scientific names. If FALSE, no
+corrections are made to the output. Default is TRUE.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}

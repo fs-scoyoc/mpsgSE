@@ -22,7 +22,7 @@ build_gbif_spatial_data(gbif_data, spp_list)
 This is the list that is used to subset the spatial data.}
 }
 \value{
-An \link[sf:sf]{sf::sf} object.
+An \link[sf:sf]{sf} object.
 }
 \description{
 Functions in this script:

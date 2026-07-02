@@ -28,7 +28,7 @@ yes, FALSE == no). Default is TRUE. The processing step}
 \item{correct}{Logical. Run \code{correct_taxon_ids()} on data. Default is TRUE.}
 }
 \value{
-An \link[sf:sf]{sf::sf} object or a \code{\link[tibble:tibble]{tibble::tibble()}}.
+An \link[sf:sf]{sf} object or a \code{\link[tibble:tibble]{tibble::tibble()}}.
 }
 \description{
 This function queries GBIF occurrence records for a species list using the

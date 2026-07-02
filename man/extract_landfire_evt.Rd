@@ -9,7 +9,7 @@ extract_landfire_evt(spp_list, spp_pts_sf, lf_dir)
 \arguments{
 \item{spp_list}{List of species with taxon ID's from \code{get_taxonomies()}.}
 
-\item{spp_pts_sf}{\link[sf:sf]{sf::sf} points object of species occurrences with taxon ID's
+\item{spp_pts_sf}{\link[sf:sf]{sf} points object of species occurrences with taxon ID's
 from \code{get_taxonomies()}.}
 
 \item{lf_dir}{Path to LANDFIRE directory.}

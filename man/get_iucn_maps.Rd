@@ -10,7 +10,7 @@ get_iucn_maps(spp_list)
 \item{spp_list}{A species list with taxon ID's from \code{get_taxonomies()}.}
 }
 \value{
-An \link[sf:sf]{sf::sf} object.
+An \link[sf:sf]{sf} object.
 }
 \description{
 This function reads spatial (polygon) range data from International Union for

@@ -15,7 +15,7 @@ See \code{sf::st_crs()} for more details. Default is NULL. If NULL, resulting
 \code{sf} object CRS will be EPSG:4326 (WGS84).}
 }
 \value{
-An \link[sf:sf]{sf::sf} object.
+An \link[sf:sf]{sf} object.
 }
 \description{
 This internal function converts the output from \code{get_gbif_data()} to a

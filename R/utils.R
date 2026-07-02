@@ -29,7 +29,8 @@ utils::globalVariables(
     "input_name", "bind_rows", "area_m2", "evt_gp_n", "evt_sbcls", "acres", 
     "continent_name", "taxonID", "sn_base", "cn", "file_name", "subfoder_path", 
     "full_path", "crs", "unit_name", "subfolder_path", "output_file", 
-    "states", "dir_path", "unit_code", "product")
+    "states", "dir_path", "unit_code", "product", "accepted_scientific_name", 
+    "key", "authorship")
   )
 
 

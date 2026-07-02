@@ -7,13 +7,13 @@
 get_bc_regions(sf_lyr)
 }
 \arguments{
-\item{sf_lyr}{\link[sf:sf]{sf::sf} polygon object.}
+\item{sf_lyr}{\link[sf:sf]{sf} polygon object.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}.
 }
 \description{
-This function clips the Birds of Conservation Regions \link[sf:sf]{sf::sf} object to a
+This function clips the Birds of Conservation Regions \link[sf:sf]{sf} object to a
 polygon.
 }
 \examples{

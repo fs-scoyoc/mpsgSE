@@ -68,7 +68,7 @@ or polygon (\code{sf} object), and then reads the data into R.
 This function submits a records request using the polygon provided to
 spatially query GBIF records in
 \href{https://www.gbif.org/darwin-core}{Darwin Core Archive format} using
-\code{\link[rgbif:download_predicate_dsl]{rgbif::pred_within()}}. GBIF records requests are staged on GBIF servers
+\code{\link[rgbif:pred_within]{rgbif::pred_within()}}. GBIF records requests are staged on GBIF servers
 and are then downloaded to a local or network directory using
 \code{\link[rgbif:occ_download]{rgbif::occ_download()}}. Finally, the data are read into R using
 \code{\link[rgbif:occ_download_get]{rgbif::occ_download_get()}} and \code{\link[rgbif:occ_download_import]{rgbif::occ_download_import()}}.
@@ -99,7 +99,7 @@ gbif_dat <- get_gbif_data(gbif_key = '9999999-999999999999999',
 }
 }
 \seealso{
-\code{\link[rgbif:download_predicate_dsl]{rgbif::pred_within()}}, \code{\link[rgbif:occ_download]{rgbif::occ_download()}},
+\code{\link[rgbif:pred_within]{rgbif::pred_within()}}, \code{\link[rgbif:occ_download]{rgbif::occ_download()}},
 \code{\link[rgbif:occ_download_wait]{rgbif::occ_download_wait()}}, \code{\link[rgbif:occ_download_get]{rgbif::occ_download_get()}},
 \code{\link[rgbif:occ_download_import]{rgbif::occ_download_import()}}, \code{\link[sf:st_crs]{sf::st_crs()}},
 \code{\link[=correct_taxon_ids]{correct_taxon_ids()}}

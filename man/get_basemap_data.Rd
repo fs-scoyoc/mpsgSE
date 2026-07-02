@@ -30,7 +30,7 @@ filtered for Forest Service land.}
 (WGS84).}
 }
 \value{
-A list of \link[sf:sf]{sf::sf} objects.
+A list of \link[sf:sf]{sf} objects.
 }
 \description{
 Pull spatial base map data for North and South America, the lower 48 US
@@ -51,11 +51,11 @@ Albers (EPSG:5070).
 
 National Forest-scale data include 'admin_bndry', 'plan_area',  'aoa',
 and 'plan_area_doughnut'. 'admin_bndry' and 'plan_area' are acquired
-using \code{\link[psoGIStools:read_edw_lyr]{psoGIStools::read_edw_lyr()}}. 'aoa' and 'plan_area_doughnut' are derived using
-the \link[sf:sf]{sf::sf} package. 'aoa', or area of analysis, is a 4828 meter (3 mile)
-buffer of 'admin_bndry' using \code{\link[sf:geos_unary]{sf::st_buffer()}}. 'plan_area_doughnut' is
+using \code{\link[psoGIStools:read_edw_lyr]{read_edw_lyr()}}. 'aoa' and 'plan_area_doughnut' are derived using
+the \link[sf:sf]{sf} package. 'aoa', or area of analysis, is a 4828 meter (3 mile)
+buffer of 'admin_bndry' using \code{\link[sf:st_buffer]{sf::st_buffer()}}. 'plan_area_doughnut' is
 a 1000 meter buffer of 'plan_area' with 'plan_area' erased using
-\code{\link[sf:geos_binary_ops]{sf::st_difference()}}. These data are returned in the coordinate
+\code{\link[sf:st_difference]{sf::st_difference()}}. These data are returned in the coordinate
 reference system provided by the \code{crs} parameter.
 }
 \note{
@@ -73,6 +73,6 @@ basemap_data <- get_basemap_data(forest_name)
 }
 }
 \seealso{
-\code{\link[psoGIStools:read_edw_lyr]{psoGIStools::read_edw_lyr()}}, \code{\link[rnaturalearth:ne_countries]{rnaturalearth::ne_countries()}},
+\code{\link[psoGIStools:read_edw_lyr]{read_edw_lyr()}}, \code{\link[rnaturalearth:ne_countries]{rnaturalearth::ne_countries()}},
 \link[rnaturalearth:ne_states]{rnaturalearth::ne_states}, \code{\link[osmdata:osmdata_sf]{osmdata::osmdata_sf()}}
 }
