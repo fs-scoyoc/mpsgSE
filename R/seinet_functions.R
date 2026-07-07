@@ -1,7 +1,7 @@
-#' Functions in this script:
-#' -   build_seinet_spatial_data()
-#' -   get_seinet_data()
-#' -   build_seinet_spp()
+# Functions in this script:
+# -   build_seinet_spatial_data()
+# -   get_seinet_data()
+# -   build_seinet_spp()
 
 
 #' Subset eligible species from SEINet data and reduce variables.

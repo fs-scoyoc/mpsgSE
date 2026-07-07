@@ -1,7 +1,7 @@
-#' Functions in this script:
-#' -   build_quarto_params()
-#' -   set_up_directories()
-#' -   write_evlas()
+# Functions in this script:
+# -   build_quarto_params()
+# -   set_up_directories()
+# -   write_evlas()
 
 
 #' Build Quarto Parameters for Automated Evaluation Templates

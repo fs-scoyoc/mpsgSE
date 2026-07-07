@@ -1,6 +1,6 @@
-#' Functions in this script:
-#' -   get_bcr_list()
-#' -   get_bc_regions()
+# Functions in this script:
+# -   get_bcr_list()
+# -   get_bc_regions()
 
 
 #' Get USGS Birds of Conservation Concern (BCC) breeding bird list for National 

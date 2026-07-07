@@ -1,9 +1,8 @@
-#' This script contains two function. Both functions will need to be modified 
-#'     for your pipeline.
-#' 
-#' List of functions:
-#'   -   `build_conservation_list()`
-#'   -   `get_eligible_tids()`
+# This script contains functions that will need to be modified for your pipeline
+# 
+# List of functions:
+#   -   `build_conservation_list()`
+#   -   `get_eligible_tids()`
 
 
 #' Build Master Conservation Status List

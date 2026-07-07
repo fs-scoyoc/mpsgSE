@@ -2,16 +2,7 @@
 % Please edit documentation in R/gbif_functions.R
 \name{build_gbif_spatial_data}
 \alias{build_gbif_spatial_data}
-\title{Functions in this script:
-\itemize{
-\item build_gbif_spatial_data()
-\item get_gbif_data()
-\item get_gbif_occ_data()
-\item build_gbif_spp()
-\item wkt_string()
-\item gbif_spatial()
-Subset eligible species from GBIF data and reduce variables.
-}}
+\title{Subset eligible species from GBIF data and reduce variables.}
 \usage{
 build_gbif_spatial_data(gbif_data, spp_list)
 }
@@ -25,16 +16,7 @@ This is the list that is used to subset the spatial data.}
 An \link[sf:sf]{sf} object.
 }
 \description{
-Functions in this script:
-\itemize{
-\item build_gbif_spatial_data()
-\item get_gbif_data()
-\item get_gbif_occ_data()
-\item build_gbif_spp()
-\item wkt_string()
-\item gbif_spatial()
 Subset eligible species from GBIF data and reduce variables.
-}
 }
 \examples{
 \dontrun{

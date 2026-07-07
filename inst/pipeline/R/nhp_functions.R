@@ -1,17 +1,12 @@
-#' This script contains four function. These functions are included as examples 
-#'     of how to read NHP data into your pipeline and will need to be modified.
-#'     `read_nhp_data()` and `get_hnp_data()` work for Colorado NHP polygon data
-#'     and the *unhp* functions work for Utah NHP point data. `build_nhp_spp()`
-#'     was build for the UNHP data, but should work for polygon data moving 
-#'     forward.
-#' 
-#' List of functions:
-#'   -   `build_nhp_spp()`
-#'   -   `get_hnp_data()`
-#'   -   `read_nhp_data()`
-#'   -   `combine_unhp_data()`
-#'   -   `get_unhp_point_data()`
-#'   -   `get_unhp_plant_data()`
+# This script contains functions that will need to be modified for your pipeline
+# 
+# List of functions:
+#   -   `build_nhp_spp()`
+#   -   `get_hnp_data()`
+#   -   `read_nhp_data()`
+#   -   `combine_unhp_data()`
+#   -   `get_unhp_point_data()`
+#   -   `get_unhp_plant_data()`
 
 
 #' Build species list from Utah NHP data

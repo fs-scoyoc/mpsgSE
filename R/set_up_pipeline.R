@@ -25,4 +25,5 @@ set_up_pipeline <- function(dir_path, unit_code){
   fs::dir_copy(template_dir, dir_path)
   pipeline_dir = file.path(dir_path, paste0(unit_code, "_SppEval_Pipeline"))
   file.rename(file.path(dir_path, "pipeline"), pipeline_dir)
+  dir.create(file.path(pipeline_dir, "data"))
   }

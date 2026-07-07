@@ -2,13 +2,7 @@
 % Please edit documentation in R/seinet_functions.R
 \name{build_seinet_spatial_data}
 \alias{build_seinet_spatial_data}
-\title{Functions in this script:
-\itemize{
-\item build_seinet_spatial_data()
-\item get_seinet_data()
-\item build_seinet_spp()
-Subset eligible species from SEINet data and reduce variables.
-}}
+\title{Subset eligible species from SEINet data and reduce variables.}
 \usage{
 build_seinet_spatial_data(sei_data, spp_list)
 }
@@ -22,13 +16,7 @@ This is the list that is used to subset the spatial data.}
 An \code{sf} class object.
 }
 \description{
-Functions in this script:
-\itemize{
-\item build_seinet_spatial_data()
-\item get_seinet_data()
-\item build_seinet_spp()
 Subset eligible species from SEINet data and reduce variables.
-}
 }
 \details{
 Additional details...

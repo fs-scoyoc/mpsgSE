@@ -1,12 +1,17 @@
+# Function in this script:
+# -   get_basemap_data()
+# -   build_basemap_data()
+
+
 #' Get base map data
 #' 
 #' @description
-#' Pull spatial base map data for North and South America, the lower 48 US 
-#'     states, and a user specified National Forest. Continental and national 
-#'     scale data are acquired using the `rnaturalearth` package and Forest 
-#'     Service data are acquired from Forest Service ArcGIS Rest Services
-#'     (https://apps.fs.usda.gov/arcx/rest/services/EDW) using `arcgislayers` 
-#'     package.
+#' This function pulls spatial base map data for North and South America, the 
+#'     lower 48 US states, and a user specified National Forest. Continental- 
+#'     and national-scale data are acquired using the `rnaturalearth` package 
+#'     and Forest Service data are acquired from Forest Service ArcGIS Rest 
+#'     Services (https://apps.fs.usda.gov/arcx/rest/services/EDW) using 
+#'     `arcgislayers` package.
 #'
 #' @param forest_name Character. Name of national forest or grassland of 
 #'     interest.
@@ -151,3 +156,86 @@ get_basemap_data = function(forest_name, admin_bndry = TRUE, plan_area = TRUE,
                     plan_area_doughnut)
   return(dat)
 }
+
+
+
+#' Build base map data
+#' 
+#' @description
+#' This is an alternative function to build base map data for the automated 
+#'     reports. Spatial base map data for North and South America, the lower 48 US 
+#'     states, and a user specified National Forest is returned in one concise 
+#'     list. 
+#'     
+#'     Continental and national scale data are acquired using the 
+#'     `rnaturalearth` package and Forest Service data provided from the user.
+#'
+#' @param admin_bndry An 'sf' object of the administrative Forest Service 
+#'     boundary.
+#' @param plan_area An 'sf' object of the plan area (Forest Service land).
+#' @param target_crs The target coordinate reference system. The default is 
+#'      EPSG:4326 (WGS 84).
+#'
+#' @returns A list of [sf] objects.
+#' @seealso [read_edw_lyr()], [rnaturalearth::ne_countries()], 
+#'          [rnaturalearth::ne_states], [osmdata::osmdata_sf()]
+#' @export
+#'
+#' @examples
+#' message("Coming soon. To a theater near you...")
+build_basemap_data = function(admin_bndry, plan_area, 
+                              target_crs = "EPSG:4326"){
+  
+  # Load these parameters to troubleshoot/modify this function
+  # target_crs = "EPSG:26913"
+  # admin_bndry = targets::tar_read(proc_bndry)
+  # plan_area = targets::tar_read(plan_area)
+  # states = c("Utah", "Nevada", "Arizona")
+  
+  message("Western hemisphere")
+  americas = rnaturalearth::ne_countries(scale = "medium",
+                                         continent = c("North America",
+                                                       "South America"),
+                                         returnclass = "sf") |>
+    dplyr::filter(name != "Hawaii") |>
+    sf::st_transform(crs = 5070)
+  
+  message("North America")
+  north_america_c = rnaturalearth::ne_countries(
+    scale = "medium", continent = "North America", returnclass = "sf"
+  ) |>
+    dplyr::select(name) |>
+    dplyr::filter(name != "United States of America")
+  north_america_s = rnaturalearth::ne_states(
+    country = c("United States of America", "Canada", "Mexico"), 
+    returnclass = "sf"
+  ) |>
+    dplyr::filter(name != "Hawaii") |>
+    dplyr::select(name = name_en)
+  north_america = dplyr::bind_rows(north_america_c, north_america_s) |>
+    sf::st_transform(crs = 5070)
+  
+  message("Lower 48 states")
+  l_48 = rnaturalearth::ne_states(country = c("United States of America")) |>
+    sf::st_as_sf() |>
+    dplyr::filter(name != "Hawaii", name != "Alaska") |>
+    sf::st_transform(crs = 5070)
+  
+  message("FS Boundaries")
+  # Area of Analysis
+  aoa = sf::st_buffer(admin_bndry, units::as_units(3,"mi")) |> 
+    sf::st_transform(target_crs) |> 
+    sf::st_make_valid()
+  # Buffer
+  plan_area_doughnut = sf::st_buffer(plan_area, units::as_units(1,"km")) |> 
+    sf::st_difference(plan_area) |> 
+    sf::st_transform(target_crs) |> 
+    sf::st_make_valid() |> 
+    suppressWarnings()
+  
+  #-- Assemble final data set
+  dat = tibble::lst(americas, north_america, l_48, aoa, admin_bndry, plan_area, 
+                    plan_area_doughnut)
+  return(dat)
+}
+

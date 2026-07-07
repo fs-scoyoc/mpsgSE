@@ -1,12 +1,12 @@
-#' Functions in this script:
-#' -   build_ns_spp_list()
-#' -   combine_ns_habs()
-#' -   combine_ns_spp_lists()
-#' -   combine_ns_state_lists()
-#' -   count_spp_by_hab()
-#' -   get_ns_state_list()
-#' -   get_ns_habitat()
-#' -   ns_ranks() *Depricated*
+# Functions in this script:
+# -   build_ns_spp_list()
+# -   combine_ns_habs()
+# -   combine_ns_spp_lists()
+# -   combine_ns_state_lists()
+# -   count_spp_by_hab()
+# -   get_ns_state_list()
+# -   get_ns_habitat()
+# -   ns_ranks() *Depricated*
 
 
 #' Build NatureServe Species List

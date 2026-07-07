@@ -2,15 +2,7 @@
 % Please edit documentation in R/ebird_functions.R
 \name{download_ebird_range_maps}
 \alias{download_ebird_range_maps}
-\title{Functions in this list:
-\itemize{
-\item download_ebird_range_maps()
-\item download_ebird_status_maps()
-\item download_ebird_trand_maps()
-\item get_ebird_regional_status()
-\item get_ebird_trends()
-Download eBird range maps
-}}
+\title{Download eBird range maps}
 \usage{
 download_ebird_range_maps(spp_list, output_path, ebird_access_key)
 }

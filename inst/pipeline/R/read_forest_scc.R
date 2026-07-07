@@ -1,3 +1,5 @@
+# This script contains functions that will need to be modified for your pipeline
+
 #' Read the Bitterroot SCC list into this pipeline.
 #' 
 #' @param xlsx_path Path to Excel file.
@@ -14,3 +16,4 @@ read_forest_scc <- function(xlsx_path) {
     psoSppEvals::get_taxonomies(correct = TRUE)
   return(dat)
 }
+

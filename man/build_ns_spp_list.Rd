@@ -2,18 +2,7 @@
 % Please edit documentation in R/natureserve_functions.R
 \name{build_ns_spp_list}
 \alias{build_ns_spp_list}
-\title{Functions in this script:
-\itemize{
-\item build_ns_spp_list()
-\item combine_ns_habs()
-\item combine_ns_spp_lists()
-\item combine_ns_state_lists()
-\item count_spp_by_hab()
-\item get_ns_state_list()
-\item get_ns_habitat()
-\item ns_ranks() \emph{Depricated}
-Build NatureServe Species List
-}}
+\title{Build NatureServe Species List}
 \usage{
 build_ns_spp_list(ns_data)
 }

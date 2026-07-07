@@ -1,10 +1,9 @@
-#' This script contains three function. `build_all_occ_data()` and 
-#'     `write_spatial_data()` might need to be modified  for your pipeline.
-#' 
-#' List of functions:
-#'   -   `build_all_occ_data()`
-#'   -   `build_basemap_data()`
-#'   -   `write_spatial_data()`
+# This script contains functions that will need to be modified for your pipeline
+# 
+# List of functions:
+#   -   `build_all_occ_data()`
+#   -   `build_basemap_data()`
+#   -   `write_spatial_data()`
 
 
 #' This function combines all of the occurrence point data into a single [sf] 
@@ -67,129 +66,6 @@ build_all_occ_data <- function(spp_list, gbif_data, seinet_data, imbcr_data,
     sf::st_as_sf()
   # Return data
   return(obs_dat)
-}
-
-
-#' Get base map data
-#' 
-#' @description
-#' Pull spatial base map data for North and South America, the lower 48 US 
-#'     states, and a user specified National Forest. Continental and national 
-#'     scale data are acquired using the `rnaturalearth` package and Forest 
-#'     Service data are acquired from Forest Service ArcGIS Rest Services
-#'     (https://apps.fs.usda.gov/arcx/rest/services/EDW) using `arcgislayers` 
-#'     package. Roads data are acquired using the `osmdata` package.
-#'
-#' @param states A list of state names or abbreviations.
-#' @param region_number The Forest Service Region number
-#' @param forest_number The Forest Service Forest number.
-#' @param forest_name The Name of the National Forest.
-#' @param admin_bndry Optional. 'sf' object of administrative Forest Service 
-#'     boundary can be provided. Default is TRUE. If TRUE administrative Forest
-#'     Service boundary will be pulled from the Forest Service ArcGIS REST 
-#'     service.
-#' @param plan_area Optional. 'sf' object of the plan area (Forest Service land) 
-#'     boundary can be provided. Default is TRUE. If TRUE the plan area boundary 
-#'     will be pulled from the Forest Service ArcGIS REST service.
-#' @param districts Optional. 'sf' object of the Forest Service district 
-#'     boundaries for the National Forest can be provided. Default is TRUE. If 
-#'     TRUE the district boundary will be pulled from the Forest Service ArcGIS 
-#'     REST service.
-#' @param target_crs The target coordinate reference system. The default is 
-#'      EPSG:4326 (WGS 84).
-#'
-#' @details
-#' `get_basemap_data` returns a list of spatial features used to produce 
-#'     automated species evaluations.
-#' @details
-#' Continental-scale data include 'americas', 'north_america', and 'l_48'. These 
-#'     data are acquired using [rnaturalearth::ne_countries()] and 
-#'     [rnaturalearth::ne_states()] functions. These data are in the NAD83 CONUS 
-#'     Albers (EPSG:5070).
-#' @details
-#' National Forest-scale data include 'admin_bndry', 'plan_area', 'districts', 
-#'     'aoa', 'aoa_bbox', and 'plan_area_doughnut'. 'admin_bndry', 'plan_area', 
-#'     and 'districts' are acquired using [read_edw_lyr()]. 'buffer', 'aoa', 
-#'     'aoa_bbox', and 'plan_area_doughnut' are derived using the [sf] package. 
-#'     'aoa', or area of analysis, is a 4828 meter (3 mile) buffer of 
-#'     'admin_bndry' using [sf::st_buffer()]. 'aoa_bbox' is a bounding box of 
-#'     'aoa' using [sf::st_bbox()]. 'plan_area_doughnut' is a 1000 meter buffer 
-#'     of 'plan_area' with 'plan_area' erased using [sf::st_difference()]. 
-#'     These data are returned in the coordinate reference system provided by 
-#'     the `crs` parameter.
-#' @note
-#' Sometimes the connection to the Forest Service REST Service or [osmdata] 
-#'     fails. This will throw the following error message: "**Error:** 
-#'     tar_make() Status code: 500. Error: json". In most instances, the 
-#'     function can simply be executed again to retrieve the data. Check the 
-#'     data servers if the error is persistent. 
-#' @returns A list of [sf] objects.
-#' @seealso [read_edw_lyr()], [rnaturalearth::ne_countries()], 
-#'          [rnaturalearth::ne_states], [osmdata::osmdata_sf()]
-#' @export
-#'
-#' @examples
-#' library(psoSppEvals)
-#' states <- c("Utah", "Nevada", "New Mexico")
-#' region_number <- "04"
-#' forest_number <- "07"
-#' forest_name <- "Dixie National Forest"
-#' basemap_data <- get_basemap_data(states, region_number, forest_number, 
-#'                                  forest_name)
-build_basemap_data = function(admin_bndry_sf, plan_area_sf, target_crs = "EPSG:4326"){
-  
-  # Load these parameters to troubleshoot/modify this function
-  # target_crs = "EPSG:26913"
-  # admin_bndry_sf = targets::tar_read(proc_bndry)
-  # plan_area_sf = targets::tar_read(plan_area)
-  # states = c("Utah", "Nevada", "Arizona")
-  
-  message("Western hemisphere")
-  americas = rnaturalearth::ne_countries(scale = "medium",
-                                         continent = c("North America",
-                                                       "South America"),
-                                         returnclass = "sf") |>
-    dplyr::filter(name != "Hawaii") |>
-    sf::st_transform(crs = 5070)
-  
-  message("North America")
-  north_america_c = rnaturalearth::ne_countries(
-    scale = "medium", continent = "North America", returnclass = "sf"
-  ) |>
-    dplyr::select(name) |>
-    dplyr::filter(name != "United States of America")
-  north_america_s = rnaturalearth::ne_states(
-    country = c("United States of America", "Canada", "Mexico"), 
-    returnclass = "sf"
-  ) |>
-    dplyr::filter(name != "Hawaii") |>
-    dplyr::select(name = name_en)
-  north_america = dplyr::bind_rows(north_america_c, north_america_s) |>
-    sf::st_transform(crs = 5070)
-  
-  message("Lower 48 states")
-  l_48 = rnaturalearth::ne_states(country = c("United States of America")) |>
-    sf::st_as_sf() |>
-    dplyr::filter(name != "Hawaii", name != "Alaska") |>
-    sf::st_transform(crs = 5070)
-  
-  message("FS Boundaries")
-  # Area of Analysis
-  aoa = sf::st_buffer(admin_bndry_sf, units::as_units(3,"mi")) |> 
-    sf::st_transform(target_crs) |> 
-    sf::st_make_valid()
-  # Buffer
-  plan_area_doughnut = sf::st_buffer(plan_area_sf, units::as_units(1,"km")) |> 
-    sf::st_difference(plan_area_sf) |> 
-    sf::st_transform(target_crs) |> 
-    sf::st_make_valid() |> 
-    suppressWarnings()
-  
-  #-- Assemble final data set
-  dat = tibble::lst(americas, north_america, l_48, aoa, 
-                    'admin_bndry' = admin_bndry_sf, 'plan_area' = plan_area_sf, 
-                    plan_area_doughnut)
-  return(dat)
 }
 
 

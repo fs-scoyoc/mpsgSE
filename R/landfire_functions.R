@@ -1,6 +1,6 @@
-#' Functions in this script:
-#' -   pull_landfire_evt()
-#' -   extract_landfire_evt()
+# Functions in this script:
+# -   pull_landfire_evt()
+# -   extract_landfire_evt()
 
 
 #' Download LANDFIRE Existing Vegetation Type (250EVT)

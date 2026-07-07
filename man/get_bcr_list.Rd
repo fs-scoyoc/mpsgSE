@@ -2,13 +2,8 @@
 % Please edit documentation in R/bcr_functions.R
 \name{get_bcr_list}
 \alias{get_bcr_list}
-\title{Functions in this script:
-\itemize{
-\item get_bcr_list()
-\item get_bc_regions()
-Get USGS Birds of Conservation Concern (BCC) breeding bird list for National
-Forest or Grassland.
-}}
+\title{Get USGS Birds of Conservation Concern (BCC) breeding bird list for National
+Forest or Grassland.}
 \usage{
 get_bcr_list(sf_lyr)
 }

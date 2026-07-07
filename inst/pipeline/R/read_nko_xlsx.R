@@ -1,9 +1,8 @@
-#' This script contains two function. These functions might need to be modified
-#'     for your pipeline.
-#' 
-#' List of functions:
-#'   -   `read_nko_xlsx()`
-#'   -   `read_habitat_xwalk()`
+# This script contains functions that will need to be modified for your pipeline
+# 
+# List of functions:
+#   -   `read_nko_xlsx()`
+#   -   `read_habitat_xwalk()`
 
 
 #' Read Native & Known to Occur determinations into the pipeline

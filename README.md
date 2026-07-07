@@ -44,6 +44,8 @@ remotes::install_github("fs-scoyoc/psoSppEvals")
 
 ## List of Functions
 
+-   `build_basemap_data`: Build base map data for automated reports.
+
 -   `build_gbif_spatial_data`: Subset eligible species from spatial GBIF data.
 
 -   `build_gbif_spp`: Summarize GBIF data by species.
@@ -88,7 +90,7 @@ remotes::install_github("fs-scoyoc/psoSppEvals")
 
 -   `extract_landfire_evt`: Extract LANDFIRE EVT data to points.
 
--   `get_basemap_data`: Read basemap data into R for Quarto script.
+-   `get_basemap_data`: Build base map data for automated reports.
 
 -   `get_bc_regions`: Clip Birds of Conservation Regions to a polygon.
 

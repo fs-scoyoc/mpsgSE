@@ -1,4 +1,4 @@
-# Two example funcitons from South Dakota and Wyoming.
+# This script example functions that will need to be modified for your pipeline
 
 #' Read the South Dakota SWAP list into this pipeline
 #'

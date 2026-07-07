@@ -1,7 +1,7 @@
-#' Function in this script:
-#' -   get_taxonomies()
-#' -   get_synonyms()
-#' -   correct_taxon_ids()
+# Functions in this script:
+# -   get_taxonomies()
+# -   get_synonyms()
+# -   correct_taxon_ids()
 
 
 #' Get Taxonomies from GBIF

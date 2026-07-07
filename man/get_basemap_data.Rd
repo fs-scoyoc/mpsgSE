@@ -33,12 +33,12 @@ filtered for Forest Service land.}
 A list of \link[sf:sf]{sf} objects.
 }
 \description{
-Pull spatial base map data for North and South America, the lower 48 US
-states, and a user specified National Forest. Continental and national
-scale data are acquired using the \code{rnaturalearth} package and Forest
-Service data are acquired from Forest Service ArcGIS Rest Services
-(https://apps.fs.usda.gov/arcx/rest/services/EDW) using \code{arcgislayers}
-package.
+This function pulls spatial base map data for North and South America, the
+lower 48 US states, and a user specified National Forest. Continental-
+and national-scale data are acquired using the \code{rnaturalearth} package
+and Forest Service data are acquired from Forest Service ArcGIS Rest
+Services (https://apps.fs.usda.gov/arcx/rest/services/EDW) using
+\code{arcgislayers} package.
 }
 \details{
 \code{get_basemap_data} returns a list of spatial features used to produce

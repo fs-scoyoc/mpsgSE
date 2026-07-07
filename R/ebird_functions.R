@@ -1,9 +1,9 @@
-#' Functions in this list:
-#' -   download_ebird_range_maps()
-#' -   download_ebird_status_maps()
-#' -   download_ebird_trand_maps()
-#' -   get_ebird_regional_status()
-#' -   get_ebird_trends()
+# Functions in this list:
+# -   download_ebird_range_maps()
+# -   download_ebird_status_maps()
+# -   download_ebird_trand_maps()
+# -   get_ebird_regional_status()
+# -   get_ebird_trends()
 
 
 #' Download eBird range maps 

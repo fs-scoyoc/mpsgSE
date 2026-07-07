@@ -1,3 +1,10 @@
+# Functions in this script:
+# -   build_imbcr_spatial_data()
+# -   get_imbcr_data()
+# -   get_imbcr_trends()
+# -   build_imbcr_spp()
+
+
 #' Subset eligible species from IMBCR data.
 #'
 #' @param imbcr_data Spatial IMBCR data from [get_imbcr_data()].

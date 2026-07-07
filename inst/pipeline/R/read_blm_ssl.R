@@ -1,3 +1,5 @@
+# This script contains functions that will need to be modified for your pipeline
+
 #' Read the BLM Sensitive Species List into this pipeline.
 #' 
 #' @param xlsx_path Path to Excel file.

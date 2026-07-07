@@ -1,13 +1,11 @@
-#' This script contains five function. `write_eligible_xlsx()` will need to be 
-#'     modified for your pipeline. `build_spp_list()` and `build_buff_list()` 
-#'     might need to be modified  for your pipeline.
-#' 
-#' List of functions:
-#'   -   `build_spp_list()`
-#'   -   `build_buff_list()`
-#'   -   `write_eligible_xlsx()`
-#'   -   `evaluate_uncertainty()`
-#'   -   `summarize_occ_dat()`
+# This script contains functions that will need to be modified for your pipeline
+# 
+# List of functions:
+#   -   `build_spp_list()`
+#   -   `build_buff_list()`
+#   -   `write_eligible_xlsx()`
+#   -   `evaluate_uncertainty()`
+#   -   `summarize_occ_dat()`
 
 
 #' Compile a comprehensive species list from occurrence data.

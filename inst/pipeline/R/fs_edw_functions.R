@@ -1,9 +1,8 @@
-#' This script contains two function. These functions might need to be modified
-#'     for your pipeline.
-#' 
-#' List of functions:
-#'   -   `get_fs_data()`
-#'   -   `build_fs_spp()`
+# This script contains functions that will need to be modified for your pipeline
+# 
+# List of functions:
+#   -   `get_fs_data()`
+#   -   `build_fs_spp()`
 
 
 #' Read Forest Service EDW data into this pipeline

@@ -2,12 +2,7 @@
 % Please edit documentation in R/landfire_functions.R
 \name{pull_landfire_evt}
 \alias{pull_landfire_evt}
-\title{Functions in this script:
-\itemize{
-\item pull_landfire_evt()
-\item extract_landfire_evt()
-Download LANDFIRE Existing Vegetation Type (250EVT)
-}}
+\title{Download LANDFIRE Existing Vegetation Type (250EVT)}
 \usage{
 pull_landfire_evt(
   plan_area_sf,
