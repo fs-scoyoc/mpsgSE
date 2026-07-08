@@ -58,8 +58,8 @@ read_habitat_xwalk <- function(xlsx_file, ns_habs_target,
   
   xwalk = readxl::read_excel(path = xlsx_file, sheet = sheet_name) |>
     janitor::clean_names() |> 
-    dplyr::select(habitat_category, ns_habitat_type, mpsg_habitat) |> 
-    dplyr::filter(mpsg_habitat != "NA")
+    dplyr::select(habitat_category, ns_habitat_type, pso_habitat) |> 
+    dplyr::filter(pso_habitat != "NA")
   
   dat = dplyr::left_join(ns_habs_target, xwalk, 
                          by = c("habitat_category", "ns_habitat_type"), 

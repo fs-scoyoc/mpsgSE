@@ -132,7 +132,7 @@ no_tids <- corrections |>
                                   messages = FALSE)
   )
 
-taxize::get_gbifid("Apodemia mormo langei")
+taxize::get_gbifid("Glauchopsyche piasus gabrielina")
 taxize::get_gbifid("Apodemia", ask = FALSE, rows = 1, messages = FALSE)
 taxize::downstream("Opius", db = 'gbif', downto = 'subspecies', 
                    intermediate = TRUE)

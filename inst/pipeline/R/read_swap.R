@@ -9,7 +9,7 @@ read_sd_swap <- function(xlsx_path){
   swap = readxl::read_excel(xlsx_path, sheet = "South Dakota SWAP table") |>
     janitor::clean_names() |> 
     dplyr::filter(!is.na(scientific_name)) |> 
-    mpsgSE::get_taxonomies(correct = TRUE)
+    psoSppEvals::get_taxonomies(correct = TRUE)
   return(swap)
 }
 
@@ -30,6 +30,6 @@ read_wy_swap <- function(xlsx_path){
     dplyr::mutate(wy_swap = "SGCN")
   dat = rbind(dplyr::select(swap, scientific_name, common_name, wy_swap), 
               dplyr::select(sgcn, scientific_name, common_name, wy_swap)) |>
-    mpsgSE::get_taxonomies(correct = TRUE)
+    psoSppEvals::get_taxonomies(correct = TRUE)
   return(dat)
 }

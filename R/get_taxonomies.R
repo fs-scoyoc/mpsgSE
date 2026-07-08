@@ -30,6 +30,12 @@
 get_taxonomies <- function(spp_list, query_field = "scientific_name", 
                            authorship = TRUE, correct = TRUE) {
   # spp_list = psoSppEvals::sp_list_ex
+  # xlsx_path = file.path("data-raw/data", "2026_CA_SGCN_CDFW.xlsx")
+  # spp_list = readxl::read_excel(xlsx_path, sheet = "CA SGCN", skip = 1) |>
+  #   janitor::clean_names() |>
+  #   dplyr::filter(!is.na(scientific_name)) |>
+  #   dplyr::select(taxonomic_group:common_name, state_listing_status,
+  #                 conservation_concern_rare_plant_rank)
   # query_field = "scientific_name"; correct = TRUE
   
   # Get list of distinct species.
@@ -42,7 +48,7 @@ get_taxonomies <- function(spp_list, query_field = "scientific_name",
     stringr::str_replace("[\r\n]", " ") |>
     stringr::str_replace("[\r\n]", "") |>
     stringr::str_replace("  ", " ") |>
-    stringr::str_replace("[^A-Za-z0-9 ]", "") |> 
+    # stringr::str_replace("[^A-Za-z0-9 ]", "") |> 
     stringr::str_to_sentence()
   # Get GBIF Taxon ID's
   distinct_spp$taxon_id <- taxize::get_gbifid(
