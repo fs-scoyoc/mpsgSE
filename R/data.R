@@ -66,7 +66,7 @@
 #' Scientific names with manually corrected taxon ID's
 #' 
 #' Manually generated through trial and error
-#' @format A data frame of 2 observations and 3 variables
+#' @format A data frame of 5 observations and 3 variables
 #' \describe{
 #'   \item{common_name}{Common species name.}
 #'   \item{scientific_name}{Scientific name of species.}
@@ -78,21 +78,12 @@
 #' Taxon ID and Scientific Name corrections
 #' 
 #' Manually generated through trial and error
-#' @format A data frame of 7 observations and 4 variables.
+#' @format A data frame of 27 observations and 4 variables.
 #' \describe{
 #'   \item{common_name}{Common species name.}
 #'   \item{errored_name}{Name that is not being queried in GBIF.}
 #'   \item{corrected_name}{A scientific name for the same speces in the GBIF backbome taxononmy.}
 #'   \item{taxon_id}{Taxon ID.}
-#'   \item{gbif_taxonID}{Taxon ID from GBIF.}
-#'   \item{kingdom}{Taxonomic Kingdom}
-#'   \item{phylum}{Taxonomic Phylum}
-#'   \item{class}{Taxonomic Class}
-#'   \item{order}{Taxonomic Order}
-#'   \item{family}{Taxonomic Family}
-#'   \item{genus}{Taxonomic Genus}
-#'   \item{species}{Taxonomic Species}
-#'   \item{subspecies}{Taxonomic Subspecies}
 #' }
 "name_corrections"
 

@@ -5,7 +5,7 @@
 \alias{manual_corrections}
 \title{Scientific names with manually corrected taxon ID's}
 \format{
-A data frame of 2 observations and 3 variables
+A data frame of 5 observations and 3 variables
 \describe{
 \item{common_name}{Common species name.}
 \item{scientific_name}{Scientific name of species.}

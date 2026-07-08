@@ -43,7 +43,9 @@ name_corrections = tibble::tibble(
     "an angle moth", "Pin Lichen", "Lindberg's Plait Moss", 
     "Tufted Evening-primrose", "Nuttals's Sandwart", "Glaucous Rattlesnakeroot",
     "Tall Fescue", "Colorado River Cutthroat Trout", 
-    "Bonneville Cutthroat Trout", "Trinity Lewisia"
+    "Bonneville Cutthroat Trout", "Trinity Lewisia", 
+    "Lange’s Metalmark Butterfly", "Western River Lamprey", 
+    "Pacific Brook Lamprey", "Western Brook Lamprey"
     ),
   # Names throwing taxon ID errors
   errored_name = c(
@@ -55,7 +57,8 @@ name_corrections = tibble::tibble(
     "Hypnum lindbergii", "Oenothera caespitosa", "Minuartia nuttallii", 
     "Prenanthes racemose", "Schedonorus arundinaceus", 
     "Oncorhynchus virginalis pleuriticus", "Oncorhynchus virginalis utah", 
-    "Lewisia taylorii"
+    "Lewisia taylorii", "Apodemia mormo langei", "Occidentis ayresii", 
+    "Occidentis pacifica", "Occidentis richardsoni"
     ), 
   # Corrected scientific names
   corrected_name = c(
@@ -66,22 +69,24 @@ name_corrections = tibble::tibble(
     "Speranza prunosata", "Calicium tigillare", "Calliergonella lindbergii", 
     "Oenothera cespitosa", "Sabulina nuttallii", "Nabalus racemosus", 
     "Lolium arundinaceum", "Oncorhynchus clarkii pleuriticus", 
-    "Oncorhynchus clarkii utah", "Lewisia taylorii"
+    "Oncorhynchus clarkii utah", "Lewisia taylorii", "Apodemia mormo langei", 
+    "Lampetra ayresi", "Lampetra pacifica", "Lampetra richardsoni"
     )
   ) |> 
   # Pull taxon IDs from GBIF
-  mpsgSE::get_taxonomies("corrected_name") |> 
+  # mpsgSE::get_taxonomies("corrected_name") |> 
   dplyr::mutate(
-    # taxon_id = taxize::get_gbifid(corrected_name, ask = FALSE, rows = 1, 
-    #                               messages = FALSE),
+    taxon_id = taxize::get_gbifid(corrected_name, ask = FALSE, rows = 1,
+                                  messages = FALSE) |> as.character(),
     # manual corrections
     taxon_id = ifelse(errored_name == "Furcula vargoi", 10047243, taxon_id),
     taxon_id = ifelse(errored_name == "Lepidostoma apache", 125954696, taxon_id),
     taxon_id = ifelse(errored_name == "Calicium tigillare", 7682261, taxon_id),
     taxon_id = ifelse(errored_name == "Lewisia taylorii", 295883556, taxon_id),
-    taxon_id = as.numeric(taxon_id)
+    taxon_id = ifelse(errored_name == "Apodemia mormo langei", "BK3PZ", taxon_id)
   ) |> 
-  dplyr::arrange(kingdom, phylum, class, order, family, genus, species, corrected_name)
+  dplyr::arrange(# kingdom, phylum, class, order, family, genus, species,
+                 corrected_name)
 
 
 # manual corrections ----
@@ -90,18 +95,47 @@ name_corrections = tibble::tibble(
 manual_corrections <- tibble::tibble(
   # Common names
   common_name = c(
-    "Vargo's Furcula", "a lepidostomatid caddisfly", "pin lichen", 
-    "Trinity Lewisia"
+    "Vargo's Furcula", "a lepidostomatid caddisfly", "Pin Lichen", 
+    "Trinity Lewisia", "Lange’s Metalmark Butterfly"
     ),
   # Names throwing taxon ID errors
   scientific_name = c(
     "Furcula vargoi", "Lepidostoma apache", "Calicium tigillare", 
-    "Lewisia taylorii"), 
+    "Lewisia taylorii", "Apodemia mormo langei"), 
   # Taxon ID's
-  taxon_id = c(10047243, 125954696, 7682261, 295883556)
-  )
+  taxon_id = c(10047243, 125954696, 7682261, 295883556, "BK3PZ")
+  ) |> 
+  dplyr::arrange(scientific_name)
 
 
 # save ----
+writexl::write_xlsx(list("corrections" = name_corrections, 
+                         "manual" = manual_corrections), 
+                    file.path("data-raw/output", "taxon_id_corrections.xlsx"))
+
 usethis::use_data(name_corrections, overwrite = TRUE)
 usethis::use_data(manual_corrections, overwrite = TRUE)
+
+
+
+
+
+# trouble shooting ----
+corrections = readxl::read_excel(
+  file.path("data-raw/output", "taxon_id_corrections.xlsx"), 
+  sheet = "corrections"
+)
+no_tids <- corrections |> 
+  dplyr::filter(is.na(taxon_id)) |> 
+  dplyr::mutate(
+    taxon_id = taxize::get_gbifid(corrected_name, ask = FALSE, rows = 1, 
+                                  messages = FALSE)
+  )
+
+taxize::get_gbifid("Apodemia mormo langei")
+taxize::get_gbifid("Apodemia", ask = FALSE, rows = 1, messages = FALSE)
+taxize::downstream("Opius", db = 'gbif', downto = 'subspecies', 
+                   intermediate = TRUE)
+apmo_tid <- taxize::get_ids("Apodemia mormo langei", db = 'ncbi', rows = 1)
+apmo_tid$ncbi[[1]]
+taxize::gna_verifier("Apodemia mormo langei") |> dplyr::glimpse()
