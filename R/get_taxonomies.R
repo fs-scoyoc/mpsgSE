@@ -53,7 +53,7 @@ get_taxonomies <- function(spp_list, query_field = "scientific_name",
   # Get GBIF Taxon ID's
   distinct_spp$taxon_id <- taxize::get_gbifid(
     distinct_spp$clean_name, ask = FALSE, rows = 1, messages = FALSE
-  ) |> as.character()
+  )
   
   # Correct Scientific Names with known Errors
   if(correct) {
