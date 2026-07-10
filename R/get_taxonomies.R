@@ -36,7 +36,7 @@ get_taxonomies <- function(spp_list, query_field = "scientific_name",
   #   dplyr::filter(!is.na(scientific_name)) |>
   #   dplyr::select(taxonomic_group:common_name, state_listing_status,
   #                 conservation_concern_rare_plant_rank)
-  # query_field = "scientific_name"; correct = TRUE
+  # query_field = "scientific_name"; correct = TRUE; authorship = TRUE
   
   # Get list of distinct species.
   distinct_spp = spp_list |>
@@ -51,6 +51,7 @@ get_taxonomies <- function(spp_list, query_field = "scientific_name",
     # stringr::str_replace("[^A-Za-z0-9 ]", "") |> 
     stringr::str_to_sentence()
   # Get GBIF Taxon ID's
+  message("Assigning taxon IDs")
   distinct_spp$taxon_id <- taxize::get_gbifid(
     distinct_spp$clean_name, ask = FALSE, rows = 1, messages = FALSE
   )
@@ -68,42 +69,64 @@ get_taxonomies <- function(spp_list, query_field = "scientific_name",
   }
   
   
-  #-- Previous method using taxize::classification()
   # Pull Taxonomy from GBIF backbone taxonomy
+  message("Pulling taxonomy form the GBIF Backbone Taxonomy")
   taxonomy_list = taxize::classification(distinct_spp$taxon_id, db = "gbif") |> 
     suppressWarnings()
   
   # Function to convert long list to wide data frame and add taxon ID's
-  convert_taxonomy = function(i, tax_list) {
-    # i = 1; tax_list = taxonomy_list
-    
-    # Get GBIF IF
-    g_id = names(tax_list)[[i]]
-    if(!is.na(g_id)){
-      # Get taxon ID
-      t_id = tax_list[[i]]$id[nrow(tax_list[[i]])] |> as.character()
-      asc = tax_list[[i]]$name[nrow(tax_list[[i]])]
-      if(asc == 'unranked') asc = NA
-      # Get taxonomy
-      named_taxonomy = tax_list[[i]] |>
-        dplyr::select(rank, name) |>
-        tidyr::pivot_wider(names_from = rank, values_from = name) |> 
-        dplyr::mutate(
-          taxon_id = as.character(ifelse(is.na(t_id), g_id, t_id)),
-          gbif_taxonID = g_id,
-          accepted_scientific_name = asc
-        )
-      return(named_taxonomy)
-    }
-  }
+  # convert_taxonomy = function(i, tax_list) {
+  #   # i = 1; tax_list = taxonomy_list
+  #   
+  #   # Get GBIF IF
+  #   g_id = names(tax_list)[[i]]
+  #   if(!is.na(g_id)){
+  #     # Get taxon ID
+  #     t_id = tax_list[[i]]$id[nrow(tax_list[[i]])] |> as.character()
+  #     asc = tax_list[[i]]$name[nrow(tax_list[[i]])]
+  #     if(asc == 'unranked') asc = NA
+  #     # Get taxonomy
+  #     named_taxonomy = tax_list[[i]] |>
+  #       dplyr::select(rank, name) |>
+  #       tidyr::pivot_wider(names_from = rank, values_from = name) |> 
+  #       dplyr::mutate(
+  #         taxon_id = as.character(ifelse(is.na(t_id), g_id, t_id)),
+  #         gbif_taxonID = g_id,
+  #         accepted_scientific_name = asc
+  #       )
+  #     return(named_taxonomy)
+  #   }
+  # }
+  # 
+  # taxonomies = lapply(seq_along(taxonomy_list), convert_taxonomy,
+  #                     taxonomy_list) |>
+  #   dplyr::bind_rows() |> 
+  #   dplyr::distinct()
   
   # Convert list to data frame
-  taxonomies = lapply(seq_along(taxonomy_list), convert_taxonomy,
-                      taxonomy_list) |>
+  taxonomies = lapply(names(taxonomy_list), function(i){
+    # i = names(taxonomy_list)[1] # [348]
+    if(!is.na(as.numeric(i))){ # !is.na(i) & !grepl("[A-Za-z]", i)
+      t_id = taxonomy_list[[i]]$id[nrow(taxonomy_list[[i]])] |> as.character()
+      asc = taxonomy_list[[i]]$name[nrow(taxonomy_list[[i]])] |> as.character()
+      if(asc == "unranked") asc = NA
+      n_tax = taxonomy_list[[1]] |> 
+        dplyr::select(rank, name) |> 
+        tidyr::pivot_wider(names_from = rank, values_from = name) |> 
+        dplyr::mutate(
+          taxon_id = ifelse(is.na(t_id), as.character(i), t_id), 
+          gbif_taxonID = as.character(i), 
+          accepted_scientific_name = asc
+        )
+      return(n_tax)
+    }
+  }) |> 
     dplyr::bind_rows() |> 
-    dplyr::distinct()
+    dplyr::distinct() |> 
+    suppressWarnings()
   
   if(authorship){
+    message("Pulling authorship from the GBIF Backbone Taxonomy")
     authors = lapply(1:nrow(taxonomies), function(x){
       # x = 66
       vars = c("taxon_id", "authorship", "rank")
@@ -141,7 +164,7 @@ get_taxonomies <- function(spp_list, query_field = "scientific_name",
                 "kingdom", "phylum", "class", "order", "family", "genus", 
                 "species", "subspecies", "variety", "form")
   
-  
+  message("Wrapping up. Your data will be available shortly.")
   spp_taxonomies = distinct_spp |>
     dplyr::mutate(taxon_id = as.character(taxon_id)) |>
     dplyr::left_join(taxonomies, by = dplyr::join_by("taxon_id" == "gbif_taxonID"), 
