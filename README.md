@@ -15,13 +15,13 @@ Welcome to the Planning Service Organization (PSO; USDA Forest Service) Species 
 
 **Version:** 0.4.0
 
-**License:** Mit + file [LICENSE](https://github.com/fs-scoyoc/mpsgSE/blob/main/LICENSE.md)
+**License:** Mit + file [LICENSE](https://github.com/fs-scoyoc/psoSppEvals/blob/main/LICENSE.md)
 
 **Depends:** R (\>= 4.1.0)
 
 **Imports:** arcgisbinding, arcgislayers, BIEN, devtools, dplyr, ebirdst, foreign, fs, glue, httr2, janitor, lubridate, methods, natserv, osmdata, purrr, psoGIStools, quarto, readr, readxl, remotes, rgbif, rlandfire, rnaturalearth, sf, stringr, taxize, terra, tibble, tidyr, tidyselect, units, writexl
 
-**Issues:** This package is under active development and changes often with out warning. Functions may experience breaking changes at any time. If you find a bugs or have an idea for a feature, please submit an [Issue](https://github.com/fs-scoyoc/mpsgSE/issues).
+**Issues:** This package is under active development and changes often with out warning. Functions may experience breaking changes at any time. If you find a bugs or have an idea for a feature, please submit an [Issue](https://github.com/fs-scoyoc/psoSppEvals/issues).
 
 **Documentation:** Just man pages for now.
 
@@ -40,7 +40,7 @@ remotes::install_github("fs-scoyoc/psoSppEvals")
 
 ## Template Species Evaluation Documents
 
-[Here](https://github.com/fs-scoyoc/mpsgSE/blob/main/docs/Example_Olive-sided_Flycatcher_Contopus_cooperi.pdf) is an example of a template species evaluation document for Olive-sided Flycatcher on the Bitterroot National Forest. These documents are templates that are customized for each land management revision project (i.e., a National Forest or Grassland) and PSO biologists will add, revise, or remove information using their best professional judgment before this document becomes part of the project record.
+[Here](https://github.com/fs-scoyoc/psoSppEvals/blob/main/docs/Example_Olive-sided_Flycatcher_Contopus_cooperi.pdf) is an example of a template species evaluation document for Olive-sided Flycatcher on the Bitterroot National Forest. These documents are templates that are customized for each land management revision project (i.e., a National Forest or Grassland) and PSO biologists will add, revise, or remove information using their best professional judgment before this document becomes part of the project record.
 
 ## List of Functions
 
