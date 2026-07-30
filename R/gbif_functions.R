@@ -129,7 +129,7 @@ build_gbif_spatial_data <- function(gbif_data, spp_list) {
 #' # New GBIF data query
 #' gbif_dat <- get_gbif_data(gbif_key = 'new',
 #'                           t_path = file.path(t_path, "data"),
-#'                           aoa_wkt = wkt_string(sf_aoa),
+#'                           aoa_wkt = sf_aoa,
 #'                           gbif_user = Sys.getenv("GBIF_USER"),
 #'                           gbif_pwd = Sys.getenv("GBIF_PWD"),
 #'                           gbif_email = Sys.getenv("GBIF_EMAIL"),

@@ -262,7 +262,7 @@ count_spp_by_hab <- function(ns_habitats){
 #'     taxonomic information included.  This can take a long time for states 
 #'     with large lists.
 #' @param correct Logical. If TRUE, `correct_taxon_ids()` is used to correct 
-#'     known issues with taxon ID's and scientific names. Default is FALSE.
+#'     known issues with taxon ID's and scientific names. Default is TRUE.
 #'
 #' @return A [list()]
 #' @export
@@ -273,7 +273,7 @@ count_spp_by_hab <- function(ns_habitats){
 #' co_ns_data_no_taxonid <- get_ns_state_list("CO", taxonomy = FALSE)
 #' co_ns_data <- get_ns_state_list("CO")
 #' }
-get_ns_state_list <- function(state, taxonomy = TRUE, correct = FALSE) {
+get_ns_state_list <- function(state, taxonomy = TRUE, correct = TRUE) {
   # state = "CO"; taxonomy = TRUE
 
   # Function to pull S-ranks

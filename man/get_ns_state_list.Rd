@@ -4,7 +4,7 @@
 \alias{get_ns_state_list}
 \title{Import NatureServe Species Data}
 \usage{
-get_ns_state_list(state, taxonomy = TRUE, correct = FALSE)
+get_ns_state_list(state, taxonomy = TRUE, correct = TRUE)
 }
 \arguments{
 \item{state}{A character with state code, example: "CO".}
@@ -14,7 +14,7 @@ taxonomic information included.  This can take a long time for states
 with large lists.}
 
 \item{correct}{Logical. If TRUE, \code{correct_taxon_ids()} is used to correct
-known issues with taxon ID's and scientific names. Default is FALSE.}
+known issues with taxon ID's and scientific names. Default is TRUE.}
 }
 \value{
 A \code{\link[=list]{list()}}
