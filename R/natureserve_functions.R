@@ -309,9 +309,11 @@ get_ns_state_list <- function(state, taxonomy = TRUE, correct = TRUE) {
     dplyr::ungroup() |> 
     dplyr::distinct()
   # get taxon ids and taxonomies
-  if (isTRUE(taxonomy) & isFALSE(correct)) sss <- psoSppEvals::get_taxonomies(sss)
+  if (isTRUE(taxonomy) & isFALSE(correct)){
+    sss <- psoSppEvals::get_taxonomies(sss, correct = FALSE)
+    }
   if (isTRUE(taxonomy) & isTRUE(correct)){
-    sss <- psoSppEvals::get_taxonomies(sss, correct = TRUE)
+    sss <- psoSppEvals::get_taxonomies(sss)
     }
   
   # construct output list
